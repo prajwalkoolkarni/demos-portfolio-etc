@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: retail_raw
+    database: "{{ target.project }}"
+    schema: retail_raw
+    tables:
+      - name: customers
+      - name: products
+      - name: transactions

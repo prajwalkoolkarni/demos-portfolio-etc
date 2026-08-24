@@ -1,0 +1,13 @@
+dbt_retail:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      keyfile: ../gcp_key.json
+      # (dbt will automatically read the project ID from your key file)
+      project: customer-propensity-modelling  # Replace with your actual GCP Project ID
+      dataset: retail_analytics
+      threads: 4
+      timeout_seconds: 300
+      location: australia-southeast1

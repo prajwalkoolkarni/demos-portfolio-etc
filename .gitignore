@@ -1,0 +1,33 @@
+# Secrets (NEVER upload)
+gcp_key.json
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# MLflow (large log files)
+mlruns/
+mlflow.db
+
+# dbt compiled files
+target/
+logs/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Streamlit secrets
+.streamlit/secrets.toml
