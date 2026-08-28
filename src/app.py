@@ -77,7 +77,7 @@ tab1, tab2, tab3 = st.tabs(["📖 Full Case Study", "⚙️ Tech Stack", "🎯 L
 # ================================================================
 with tab1:
     st.markdown("""
-    <div style="background-color:#f0f2f6; padding:12px 20px; border-radius:8px; margin-bottom:24px; border:1px solid #d0d5dc;">
+    <div style="background-color:#f0f2f6; padding:12px 20px; border-radius:8px; margin-bottom:24px; border:1px solid #d0d5dc; color:#212529;">
         <b style="font-size:1.1rem;">📑 On this page:</b> &nbsp;&nbsp;
         <a href="#hero">Overview</a> &bull;
         <a href="#business">Problem</a> &bull;
@@ -98,11 +98,11 @@ with tab1:
     **The goal:** Identify at-risk customers early so the retention team can intervene with targeted offers.
     
     <div style="margin-top: 12px;">
-        <span style="background-color:#e9ecef; padding:4px 12px; border-radius:20px; font-size:0.85rem; display:inline-block; margin-right:8px;">🔮 XGBoost</span>
-        <span style="background-color:#e9ecef; padding:4px 12px; border-radius:20px; font-size:0.85rem; display:inline-block; margin-right:8px;">📊 SHAP</span>
-        <span style="background-color:#e9ecef; padding:4px 12px; border-radius:20px; font-size:0.85rem; display:inline-block; margin-right:8px;">☁️ BigQuery</span>
-        <span style="background-color:#e9ecef; padding:4px 12px; border-radius:20px; font-size:0.85rem; display:inline-block; margin-right:8px;">🌊 Streamlit</span>
-        <span style="background-color:#e9ecef; padding:4px 12px; border-radius:20px; font-size:0.85rem; display:inline-block; margin-right:8px;">🧪 MLflow</span>
+        <span style="background-color:#e9ecef; padding:4px 12px; border-radius:20px; font-size:0.85rem; display:inline-block; margin-right:8px;color:#212529">🔮 XGBoost</span>
+        <span style="background-color:#e9ecef; padding:4px 12px; border-radius:20px; font-size:0.85rem; display:inline-block; margin-right:8px;color:#212529">📊 SHAP</span>
+        <span style="background-color:#e9ecef; padding:4px 12px; border-radius:20px; font-size:0.85rem; display:inline-block; margin-right:8px;color:#212529">☁️ BigQuery</span>
+        <span style="background-color:#e9ecef; padding:4px 12px; border-radius:20px; font-size:0.85rem; display:inline-block; margin-right:8px;color:#212529">🌊 Streamlit</span>
+        <span style="background-color:#e9ecef; padding:4px 12px; border-radius:20px; font-size:0.85rem; display:inline-block; margin-right:8px;color:#212529">🧪 MLflow</span>
     </div>
     """, unsafe_allow_html=True)
     st.divider()
@@ -164,7 +164,7 @@ with tab1:
     for i, (col, (emoji, label)) in enumerate(zip(cols, steps)):
         with col:
             st.markdown(f"""
-            <div style="background-color:#f0f2f6; padding:16px 8px; border-radius:8px; text-align:center; border:1px solid #d0d5dc; height:100px; display:flex; flex-direction:column; justify-content:center;">
+            <div style="background-color:#f0f2f6; padding:16px 8px; border-radius:8px; text-align:center; border:1px solid #d0d5dc; height:100px; display:flex; flex-direction:column; justify-content:center; color:#212529;">
                 <div style="font-size:2rem;">{emoji}</div>
                 <div style="font-weight:600; font-size:0.9rem;">{label}</div>
             </div>
@@ -298,7 +298,11 @@ with tab3:
                 k: v for k, v in base_customer.items() 
                 if k not in ['tenure_days', 'monetary_value', 'frequency', 'return_rate', 'membership_tier']
             }
-            st.json(hidden_fields)
+            # Drop 'is_churned' from the display so it doesn't confuse viewers
+            clean_hidden = {k: v for k, v in hidden_fields.items() if k != 'is_churned'}
+            st.json(clean_hidden)
+            st.caption("📌 These are the actual values from the selected real customer record. is_churned (the donor's real outcome) is hidden to avoid confusion with the current prediction.")
+
             st.caption(f"🎲 Currently using Customer #{st.session_state.current_customer_idx + 1} of {len(base_customers)}. Click 'Shuffle background customer' to swap.")
     
     # ------------------------------------------------------------------
@@ -365,8 +369,13 @@ with tab3:
         st.caption("🔵 **Blue bars** lower churn risk • 🔴 **Red bars** raise it • Longer = bigger impact")
         st.caption("📐 Values shown are in **log-odds units** — direction (red/blue) matters more than the exact number.")
         
-        fig, ax = plt.subplots(figsize=(6, 5), facecolor='white')
-        ax.set_facecolor('white')
+        fig, ax = plt.subplots(figsize=(6, 5), facecolor='none')
+        ax.set_facecolor('none')
+        shap.waterfall_plot(exp, max_display=8, show=False)
+        # Add a visible border so it looks like a card
+        for spine in ax.spines.values():
+            spine.set_edgecolor('#444444')  # Dark grey border
+            spine.set_linewidth(1)
         shap.waterfall_plot(exp, max_display=8, show=False)
         for spine in ax.spines.values():
             spine.set_edgecolor('#d0d5dc')
