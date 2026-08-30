@@ -4,7 +4,7 @@ shap==0.46.0
 pandas==2.2.3
 numpy==2.4.6
 matplotlib==3.9.0
-scikit-learn==1.4.0
+scikit-learn==1.5.0
 joblib==1.5.3
 pyarrow==17.0.0
 rich>=10.14.0,<14
