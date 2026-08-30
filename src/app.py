@@ -10,6 +10,22 @@ import random
 # PAGE CONFIG
 # --------------------------------------------------------------------
 st.set_page_config(page_title="Retail Churn Predictor", layout="wide", page_icon="🛍️")
+st.markdown("""
+<style>
+[data-testid="stSliderThumbValue"] {
+color: #FFFFFF !important;
+text-shadow: 0 1px 3px rgba(0,0,0,0.85);
+}
+div[style*="f0f2f6"] a {
+color: #0B5ED7 !important;
+font-weight: 600;
+text-decoration: none;
+}
+div[style*="f0f2f6"] a:hover {
+text-decoration: underline;
+}
+</style>
+""", unsafe_allow_html=True)
 
 # --------------------------------------------------------------------
 # LOAD MODEL & DATA (Cached)
