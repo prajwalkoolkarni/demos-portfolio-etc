@@ -7,3 +7,4 @@ matplotlib==3.8.0
 scikit-learn==1.4.0
 joblib==1.5.3
 pyarrow==15.0.0
+rich>=10.14.0,<14
