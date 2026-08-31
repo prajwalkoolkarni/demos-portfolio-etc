@@ -180,7 +180,7 @@ with tab1:
     for i, (col, (emoji, label)) in enumerate(zip(cols, steps)):
         with col:
             st.markdown(f"""
-            <div style="background-color:#f0f2f6; padding:16px 8px; border-radius:8px; text-align:center; border:1px solid #d0d5dc; height:100px; display:flex; flex-direction:column; justify-content:center; color:#212529;">
+                        <div style="background-color:#f0f2f6; padding:16px 8px; border-radius:8px; text-align:center; border:1px solid #d0d5dc; height:150px; display:flex; flex-direction:column; justify-content:center; color:#212529;">
                 <div style="font-size:2rem;">{emoji}</div>
                 <div style="font-weight:600; font-size:0.9rem;">{label}</div>
             </div>
